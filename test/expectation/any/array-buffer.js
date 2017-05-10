@@ -6,7 +6,7 @@ describe('ArrayBuffer', () => {
         let millisecondsPerFrame;
 
         beforeEach(function (done) {
-            this.timeout(10000);
+            this.timeout(20000);
 
             arrayBuffer = new ArrayBuffer(2147479551);
 
@@ -38,7 +38,7 @@ describe('ArrayBuffer', () => {
         });
 
         it('should block the main thread', function (done) {
-            this.timeout(10000);
+            this.timeout(20000);
 
             let remainingMinimalCycles = 10;
             let slicedBuffer; // eslint-disable-line no-unused-vars
