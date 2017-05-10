@@ -52,7 +52,7 @@ describe('ArrayBuffer', () => {
                         const elapsedTime = now - timeAtLastCycle;
 
                         if (remainingMinimalCycles === 7) {
-                            expect(elapsedTime).to.be.above(millisecondsPerFrame / 10);
+                            expect(elapsedTime).to.be.above(millisecondsPerFrame * 10);
                         } else {
                             expect(elapsedTime).to.be.below(millisecondsPerFrame * 10);
                         }
