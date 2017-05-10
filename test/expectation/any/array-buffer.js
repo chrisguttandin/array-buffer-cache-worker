@@ -6,7 +6,7 @@ describe('ArrayBuffer', () => {
         let millisecondsPerFrame;
 
         beforeEach(function (done) {
-            this.timeout(5000);
+            this.timeout(10000);
 
             arrayBuffer = new ArrayBuffer(2147479551);
 
