@@ -1,5 +1,7 @@
 # array-buffer-cache-worker
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chrisguttandin/array-buffer-cache-worker.svg)](https://greenkeeper.io/)
+
 **The worker which is used by the array-buffer-cache package.**
 
 [![tests](https://img.shields.io/travis/chrisguttandin/array-buffer-cache-worker/master.svg?style=flat-square)](https://travis-ci.org/chrisguttandin/array-buffer-cache-worker)
