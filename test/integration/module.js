@@ -8,22 +8,30 @@ describe('module', () => {
 
     describe('clone()', () => {
 
+        let arrayBufferId;
         let id;
 
         beforeEach(() => {
+            arrayBufferId = 17;
             id = 43;
         });
 
         describe('without a stored arrayBuffer', () => {
 
             it('should return an error', (done) => {
-                worker.addEventListener('message', ({ data: { err: { message } } }) => {
-                    expect(message).to.equal(`There is no arrayBuffer stored with an id called "${ id }".`);
+                worker.addEventListener('message', ({ data }) => {
+                    expect(data).to.deep.equal({
+                        error: {
+                            message: `There is no arrayBuffer stored with an id called "${ arrayBufferId }".`
+                        },
+                        id,
+                        result: null
+                    });
 
                     done();
                 });
 
-                worker.postMessage({ action: 'clone', id });
+                worker.postMessage({ id, method: 'clone', params: { arrayBufferId } });
             });
 
         });
@@ -44,22 +52,25 @@ describe('module', () => {
                 };
 
                 worker.addEventListener('message', onMessage);
-                worker.postMessage({ action: 'store', arrayBuffer: float64Array.buffer, id }, [ float64Array.buffer ]);
+                worker.postMessage({ id, method: 'store', params: { arrayBuffer: float64Array.buffer, arrayBufferId } }, [ float64Array.buffer ]);
             });
 
             it('should return the cloned arrayBuffer with the given id', (done) => {
                 worker.addEventListener('message', ({ data }) => {
-                    expect(data.action).to.equal('clone');
-
-                    const float64Array = new Float64Array(data.arrayBuffer);
+                    const float64Array = new Float64Array(data.result.arrayBuffer);
 
                     expect(float64Array[0]).to.equal(value);
-                    expect(data.id).to.equal(id);
+
+                    expect(data).to.deep.equal({
+                        error: null,
+                        id,
+                        result: { arrayBuffer: data.result.arrayBuffer }
+                    });
 
                     done();
                 });
 
-                worker.postMessage({ action: 'clone', id });
+                worker.postMessage({ id, method: 'clone', params: { arrayBufferId } });
             });
 
         });
@@ -68,22 +79,30 @@ describe('module', () => {
 
     describe('purge()', () => {
 
+        let arrayBufferId;
         let id;
 
         beforeEach(() => {
+            arrayBufferId = 23;
             id = 43;
         });
 
         describe('without a stored arrayBuffer', () => {
 
             it('should return an error', (done) => {
-                worker.addEventListener('message', ({ data: { err: { message } } }) => {
-                    expect(message).to.equal(`There is no arrayBuffer stored with an id called "${ id }".`);
+                worker.addEventListener('message', ({ data }) => {
+                    expect(data).to.deep.equal({
+                        error: {
+                            message: `There is no arrayBuffer stored with an id called "${ arrayBufferId }".`
+                        },
+                        id,
+                        result: null
+                    });
 
                     done();
                 });
 
-                worker.postMessage({ action: 'purge', id });
+                worker.postMessage({ id, method: 'purge', params: { arrayBufferId } });
             });
 
         });
@@ -104,18 +123,21 @@ describe('module', () => {
                 };
 
                 worker.addEventListener('message', onMessage);
-                worker.postMessage({ action: 'store', arrayBuffer: float64Array.buffer, id }, [ float64Array.buffer ]);
+                worker.postMessage({ id, method: 'store', params: { arrayBuffer: float64Array.buffer, arrayBufferId } }, [ float64Array.buffer ]);
             });
 
-            it('should return the id of the purge arrayBuffer', (done) => {
+            it('should return the id of the purge arrayBuffer message', (done) => {
                 worker.addEventListener('message', ({ data }) => {
-                    expect(data.action).to.equal('purge');
-                    expect(data.id).to.equal(id);
+                    expect(data).to.deep.equal({
+                        error: null,
+                        id,
+                        result: null
+                    });
 
                     done();
                 });
 
-                worker.postMessage({ action: 'purge', id });
+                worker.postMessage({ id, method: 'purge', params: { arrayBufferId } });
             });
 
         });
@@ -131,24 +153,29 @@ describe('module', () => {
     describe('store()', () => {
 
         let arrayBuffer;
+        let arrayBufferId;
         let id;
 
         beforeEach(() => {
             arrayBuffer = new ArrayBuffer(8);
+            arrayBufferId = 27;
             id = 43;
         });
 
         describe('without a stored arrayBuffer', () => {
 
-            it('should return the id of the stored arrayBuffer', (done) => {
+            it('should return the id of the store arrayBuffer message', (done) => {
                 worker.addEventListener('message', ({ data }) => {
-                    expect(data.action).to.equal('store');
-                    expect(data.id).to.equal(id);
+                    expect(data).to.deep.equal({
+                        error: null,
+                        id,
+                        result: null
+                    });
 
                     done();
                 });
 
-                worker.postMessage({ action: 'store', arrayBuffer, id }, [ arrayBuffer ]);
+                worker.postMessage({ id, method: 'store', params: { arrayBuffer, arrayBufferId } }, [ arrayBuffer ]);
             });
 
         });
@@ -165,17 +192,23 @@ describe('module', () => {
                 };
 
                 worker.addEventListener('message', onMessage);
-                worker.postMessage({ action: 'store', arrayBuffer: otherArrayBuffer, id }, [ otherArrayBuffer ]);
+                worker.postMessage({ id, method: 'store', params: { arrayBuffer: otherArrayBuffer, arrayBufferId } }, [ otherArrayBuffer ]);
             });
 
             it('should return an error', (done) => {
-                worker.addEventListener('message', ({ data: { err: { message } } }) => {
-                    expect(message).to.equal(`There is already an arrayBuffer stored with an id called "${ id }".`);
+                worker.addEventListener('message', ({ data }) => {
+                    expect(data).to.deep.equal({
+                        error: {
+                            message: `There is already an arrayBuffer stored with an id called "${ arrayBufferId }".`
+                        },
+                        id,
+                        result: null
+                    });
 
                     done();
                 });
 
-                worker.postMessage({ action: 'store', arrayBuffer, id }, [ arrayBuffer ]);
+                worker.postMessage({ id, method: 'store', params: { arrayBuffer, arrayBufferId } }, [ arrayBuffer ]);
             });
 
         });

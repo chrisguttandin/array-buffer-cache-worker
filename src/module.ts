@@ -1,39 +1,45 @@
 import { ArrayBufferStore } from './helpers/array-buffer-store';
-import { TArrayBufferCacheEvent } from './types';
+import { IBrokerEvent, ICloneResponse, IErrorResponse, IPurgeResponse, ISliceResponse, IStoreResponse } from './interfaces';
 
 export * from './interfaces';
 export * from './types';
 
 const arrayBufferStore = new ArrayBufferStore();
 
-addEventListener('message', ({ data }: TArrayBufferCacheEvent) => {
+addEventListener('message', ({ data }: IBrokerEvent) => {
     try {
-        if (data.action === 'clone') {
-            const { action, id } = data;
+        if (data.method === 'clone') {
+            const { id, params: { arrayBufferId } } = data;
 
-            const arrayBuffer = arrayBufferStore.clone(id);
+            const arrayBuffer = arrayBufferStore.clone(arrayBufferId);
 
-            postMessage({ action, arrayBuffer, id }, [ arrayBuffer ]);
-        } else if (data.action === 'purge') {
-            const { action, id } = data;
+            postMessage(<ICloneResponse> { error: null, id, result: { arrayBuffer } }, [ arrayBuffer ]);
+        } else if (data.method === 'purge') {
+            const { id, params: { arrayBufferId } } = data;
 
-            arrayBufferStore.purge(id);
+            arrayBufferStore.purge(arrayBufferId);
 
-            postMessage({ action, id });
-        } else if (data.action === 'slice') {
-            const { action, begin, end = null, id } = data;
+            postMessage(<IPurgeResponse> { error: null, id, result: null });
+        } else if (data.method === 'slice') {
+            const { id, params: { arrayBufferId, begin, end = null } } = data;
 
-            const arrayBuffer = arrayBufferStore.slice(id, begin, end);
+            const arrayBuffer = arrayBufferStore.slice(arrayBufferId, begin, end);
 
-            postMessage({ action, arrayBuffer, id }, [ arrayBuffer ]);
-        } else if (data.action === 'store') {
-            const { action, arrayBuffer, id } = data;
+            postMessage(<ISliceResponse> { error: null, id, result: { arrayBuffer } }, [ arrayBuffer ]);
+        } else if (data.method === 'store') {
+            const { id, params: { arrayBuffer, arrayBufferId } } = data;
 
-            arrayBufferStore.store(id, arrayBuffer);
+            arrayBufferStore.store(arrayBufferId, arrayBuffer);
 
-            postMessage({ action, id });
+            postMessage(<IStoreResponse> { error: null, id, result: null });
         }
     } catch (err) {
-        postMessage({ err: { message: err.message } });
+        postMessage(<IErrorResponse> {
+            error: {
+                message: err.message
+            },
+            id: data.id,
+            result: null
+        });
     }
 });
