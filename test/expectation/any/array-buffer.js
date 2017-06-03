@@ -5,13 +5,13 @@ describe('ArrayBuffer', () => {
         let arrayBuffer;
 
         beforeEach(function () {
-            this.timeout(20000);
+            this.timeout(30000);
 
             arrayBuffer = new ArrayBuffer(2147479551);
         });
 
         it('should block the main thread', function () {
-            this.timeout(20000);
+            this.timeout(30000);
 
             let lastNow = performance.now();
             let currentNow = performance.now();
