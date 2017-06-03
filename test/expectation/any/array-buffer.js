@@ -7,7 +7,7 @@ describe('ArrayBuffer', () => {
         beforeEach(function () {
             this.timeout(30000);
 
-            // 2147479551 is the largest possible length
+            // 2147479551 is the largest possible length.
             arrayBuffer = new ArrayBuffer(1000000000);
         });
 
