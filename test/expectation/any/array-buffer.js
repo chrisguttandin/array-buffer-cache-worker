@@ -7,8 +7,11 @@ describe('ArrayBuffer', () => {
         beforeEach(function () {
             this.timeout(30000);
 
-            // 2147479551 is the largest possible length.
-            arrayBuffer = new ArrayBuffer(1000000000);
+            /*
+             * 2147479551 is the largest possible length but an ArrayBuffer of that size can't be sliced by Chrome and Safari on
+             * Sauce Labs. However a size of 150,000,000 bytes is enough to let the test pass.
+             */
+            arrayBuffer = new ArrayBuffer(150000000);
         });
 
         it('should block the main thread', function () {
