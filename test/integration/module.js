@@ -44,7 +44,6 @@ describe('module', () => {
                 value = Math.random();
 
                 const float64Array = new Float64Array([ value ]);
-
                 const onMessage = () => {
                     worker.removeEventListener('message', onMessage);
 
@@ -115,7 +114,6 @@ describe('module', () => {
                 value = Math.random();
 
                 const float64Array = new Float64Array([ value ]);
-
                 const onMessage = () => {
                     worker.removeEventListener('message', onMessage);
 
@@ -184,7 +182,6 @@ describe('module', () => {
 
             beforeEach((done) => {
                 const otherArrayBuffer = new ArrayBuffer(8);
-
                 const onMessage = () => {
                     worker.removeEventListener('message', onMessage);
 
