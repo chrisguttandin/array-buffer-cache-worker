@@ -4,6 +4,8 @@ module.exports = (config) => {
 
         basePath: '../../',
 
+        browserNoActivityTimeout: 40000,
+
         client: {
             mochaWebWorker: {
                 evaluate: {
@@ -80,8 +82,6 @@ module.exports = (config) => {
 
         config.set({
 
-            browserNoActivityTimeout: 20000,
-
             browsers: [
                 'ChromeSauceLabs',
                 'FirefoxSauceLabs',
@@ -115,8 +115,6 @@ module.exports = (config) => {
     } else {
 
         config.set({
-
-            browserNoActivityTimeout: 40000,
 
             browsers: [
                 'Chrome',
