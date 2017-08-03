@@ -1,3 +1,3 @@
-import { ICloneRequest, IPurgeRequest, ISliceRequest, IStoreRequest } from '../interfaces';
+import { ICloneRequest, IConnectRequest, IDisconnectRequest, IPurgeRequest, ISliceRequest, IStoreRequest } from '../interfaces';
 
-export type TBrokerMessage = ICloneRequest | IPurgeRequest | ISliceRequest | IStoreRequest;
+export type TBrokerMessage = ICloneRequest | IConnectRequest | IDisconnectRequest | IPurgeRequest | ISliceRequest | IStoreRequest;
