@@ -167,7 +167,7 @@ describe('module', () => {
 
         describe('without a stored arrayBuffer', () => {
 
-            it('should return the id of the store arrayBuffer message', (done) => {
+            it('should return the id of the stored arrayBuffer message', (done) => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
                         error: null,
