@@ -4,7 +4,7 @@ describe('ArrayBuffer', () => {
 
         let arrayBuffer;
 
-        afterEach(function (done) {
+        after(function (done) {
             this.timeout(3000);
 
             // @todo This is an optimistic fix to prevent the famous 'Some of your tests did a full page reload!' error.
