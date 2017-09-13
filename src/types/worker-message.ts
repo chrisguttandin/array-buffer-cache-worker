@@ -11,7 +11,7 @@ import {
 export type TWorkerMessage = ICloneResponse |
     IConnectResponse |
     IDisconnectResponse |
-    IErrorResponse |
+    IErrorResponse |
     IPurgeResponse |
     ISliceResponse |
     IStoreResponse;

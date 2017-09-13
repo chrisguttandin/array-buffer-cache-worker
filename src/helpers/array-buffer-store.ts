@@ -10,7 +10,7 @@ export class ArrayBufferStore {
         const arrayBuffer = this._store.get(id);
 
         if (arrayBuffer === undefined) {
-            throw new Error(`There is no arrayBuffer stored with an id called "${ id }".`);
+            throw new Error(`There is no arrayBuffer stored with an id called "${ id }".`);
         }
 
         return arrayBuffer.slice(0);
@@ -20,7 +20,7 @@ export class ArrayBufferStore {
         const arrayBufferExisted = this._store.delete(id);
 
         if (!arrayBufferExisted) {
-            throw new Error(`There is no arrayBuffer stored with an id called "${ id }".`);
+            throw new Error(`There is no arrayBuffer stored with an id called "${ id }".`);
         }
     }
 
@@ -28,7 +28,7 @@ export class ArrayBufferStore {
         const arrayBuffer = this._store.get(id);
 
         if (arrayBuffer === undefined) {
-            throw new Error(`There is no arrayBuffer stored with an id called "${ id }".`);
+            throw new Error(`There is no arrayBuffer stored with an id called "${ id }".`);
         }
 
         // @todo Validate the values of begin and end.
@@ -38,7 +38,7 @@ export class ArrayBufferStore {
 
     public store (id: number, arrayBuffer: ArrayBuffer) {
         if (this._store.has(id)) {
-            throw new Error(`There is already an arrayBuffer stored with an id called "${ id }".`);
+            throw new Error(`There is already an arrayBuffer stored with an id called "${ id }".`);
         }
 
         this._store.set(id, arrayBuffer);
