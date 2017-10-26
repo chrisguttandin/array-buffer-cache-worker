@@ -27,14 +27,14 @@ describe('ArrayBuffer', () => {
             let lastNow = performance.now();
             let currentNow = performance.now();
 
-            expect(currentNow - lastNow).to.be.below(100);
+            expect(currentNow - lastNow).to.be.below(90);
 
             arrayBuffer.slice(0);
 
             lastNow = currentNow;
             currentNow = performance.now();
 
-            expect(currentNow - lastNow).to.be.above(100);
+            expect(currentNow - lastNow).to.be.above(90);
         });
 
     });
