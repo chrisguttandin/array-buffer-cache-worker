@@ -64,6 +64,6 @@ const handleEvent = (receiver: MessagePort, { data }: IBrokerEvent) => {
             result: null
         });
     }
-}
+};
 
 addEventListener('message', handleEvent.bind(null, self));
