@@ -86,7 +86,89 @@ describe('arrayBufferStore', () => {
 
     describe('slice()', () => {
 
-        // @todo
+        let arrayBufferStore;
+        let id;
+
+        beforeEach(() => {
+            arrayBufferStore = new ArrayBufferStore();
+            id = 43;
+        });
+
+        describe('without a stored arrayBuffer', () => {
+
+            it('should throw an error', () => {
+                expect(() => {
+                    arrayBufferStore.slice(id, 0);
+                }).to.throw(Error, `There is no arrayBuffer stored with an id called "${ id }".`);
+            });
+
+        });
+
+        describe('with a stored arrayBuffer', () => {
+
+            let values;
+
+            beforeEach(() => {
+                values = [ Math.random(), Math.random(), Math.random() ];
+
+                const float64Array = new Float64Array(values);
+
+                arrayBufferStore.store(id, float64Array.buffer);
+            });
+
+            it('should clone the arrayBuffer with the given id', () => {
+                const float64Array = new Float64Array(arrayBufferStore.slice(id, 0, null));
+
+                expect(Array.from(float64Array)).to.deep.equal(values);
+            });
+
+            it('should slice the arrayBuffer with the given id', () => {
+                const float64Array = new Float64Array(arrayBufferStore.slice(id, Float64Array.BYTES_PER_ELEMENT, Float64Array.BYTES_PER_ELEMENT * 2));
+
+                expect(Array.from(float64Array)).to.deep.equal(values.slice(1, 2));
+            });
+
+            describe('with a value for begin below zero', () => {
+
+                it('should throw an error', () => {
+                    expect(() => {
+                        arrayBufferStore.slice(id, -1);
+                    }).to.throw(Error, 'The given value for begin "-1" is out of bounds.');
+                });
+
+            });
+
+            describe('with a value for begin above the size of the arrayBuffer', () => {
+
+                it('should throw an error', () => {
+                    expect(() => {
+                        arrayBufferStore.slice(id, (Float64Array.BYTES_PER_ELEMENT * 3) + 1);
+                    }).to.throw(Error, 'The given value for begin "25" is out of bounds.');
+                });
+
+            });
+
+            describe('with a value for end above the size of the arrayBuffer', () => {
+
+                it('should throw an error', () => {
+                    expect(() => {
+                        arrayBufferStore.slice(id, 0, (Float64Array.BYTES_PER_ELEMENT * 3) + 1);
+                    }).to.throw(Error, 'The given value for end "25" is out of bounds.');
+                });
+
+            });
+
+            describe('with a value for end below the value of begin', () => {
+
+                it('should throw an error', () => {
+                    expect(() => {
+                        arrayBufferStore.slice(id, 12, 4);
+                    }).to.throw(Error, 'The given value for end "4" is below the given value for begin "12".');
+                });
+
+            });
+
+        });
 
     });
 
