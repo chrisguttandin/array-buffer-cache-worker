@@ -27,10 +27,11 @@ describe('module', () => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
                         error: {
+                            // @todo Define a more meaningful error code.
+                            code: -32603,
                             message: `There is no arrayBuffer stored with an id called "${ arrayBufferId }".`
                         },
-                        id,
-                        result: null
+                        id
                     });
 
                     done();
@@ -61,14 +62,13 @@ describe('module', () => {
 
             it('should return the cloned arrayBuffer with the given id', (done) => {
                 worker.addEventListener('message', ({ data }) => {
-                    const float64Array = new Float64Array(data.result.arrayBuffer);
+                    const float64Array = new Float64Array(data.result);
 
                     expect(float64Array[0]).to.equal(value);
 
                     expect(data).to.deep.equal({
-                        error: null,
                         id,
-                        result: { arrayBuffer: data.result.arrayBuffer }
+                        result: data.result
                     });
 
                     done();
@@ -99,7 +99,6 @@ describe('module', () => {
 
             worker.addEventListener('message', ({ data }) => {
                 expect(data).to.deep.equal({
-                    error: null,
                     id: connectRequestId,
                     result: null
                 });
@@ -124,7 +123,6 @@ describe('module', () => {
             ports[1].start();
             ports[1].addEventListener('message', ({ data }) => {
                 expect(data).to.deep.equal({
-                    error: null,
                     id: storeRequestId,
                     result: null
                 });
@@ -134,7 +132,6 @@ describe('module', () => {
 
             worker.addEventListener('message', ({ data }) => {
                 expect(data).to.deep.equal({
-                    error: null,
                     id: connectRequestId,
                     result: null
                 });
@@ -178,7 +175,6 @@ describe('module', () => {
 
             worker.addEventListener('message', ({ data }) => {
                 expect(data).to.deep.equal({
-                    error: null,
                     id: disconnectRequestId,
                     result: null
                 });
@@ -213,10 +209,11 @@ describe('module', () => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
                         error: {
+                            // @todo Define a more meaningful error code.
+                            code: -32603,
                             message: `There is no arrayBuffer stored with an id called "${ arrayBufferId }".`
                         },
-                        id,
-                        result: null
+                        id
                     });
 
                     done();
@@ -248,7 +245,6 @@ describe('module', () => {
             it('should return the id of the purge arrayBuffer message', (done) => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
-                        error: null,
                         id,
                         result: null
                     });
@@ -279,10 +275,11 @@ describe('module', () => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
                         error: {
+                            // @todo Define a more meaningful error code.
+                            code: -32603,
                             message: `There is no arrayBuffer stored with an id called "${ arrayBufferId }".`
                         },
-                        id,
-                        result: null
+                        id
                     });
 
                     done();
@@ -313,32 +310,30 @@ describe('module', () => {
 
             it('should return the cloned arrayBuffer with the given id', (done) => {
                 worker.addEventListener('message', ({ data }) => {
-                    const float64Array = new Float64Array(data.result.arrayBuffer);
+                    const float64Array = new Float64Array(data.result);
 
                     expect(Array.from(float64Array)).to.deep.equal(values);
 
                     expect(data).to.deep.equal({
-                        error: null,
                         id,
-                        result: { arrayBuffer: data.result.arrayBuffer }
+                        result: data.result
                     });
 
                     done();
                 });
 
-                worker.postMessage({ id, method: 'slice', params: { arrayBufferId, begin: 0 } });
+                worker.postMessage({ id, method: 'slice', params: { arrayBufferId, begin: 0, end: null } });
             });
 
             it('should return the sliced arrayBuffer with the given id', (done) => {
                 worker.addEventListener('message', ({ data }) => {
-                    const float64Array = new Float64Array(data.result.arrayBuffer);
+                    const float64Array = new Float64Array(data.result);
 
                     expect(Array.from(float64Array)).to.deep.equal(values.slice(1, 2));
 
                     expect(data).to.deep.equal({
-                        error: null,
                         id,
-                        result: { arrayBuffer: data.result.arrayBuffer }
+                        result: data.result
                     });
 
                     done();
@@ -353,10 +348,11 @@ describe('module', () => {
                     worker.addEventListener('message', ({ data }) => {
                         expect(data).to.deep.equal({
                             error: {
+                                // @todo Define a more meaningful error code.
+                                code: -32603,
                                 message: 'The given value for begin "-1" is out of bounds.'
                             },
-                            id,
-                            result: null
+                            id
                         });
 
                         done();
@@ -373,10 +369,11 @@ describe('module', () => {
                     worker.addEventListener('message', ({ data }) => {
                         expect(data).to.deep.equal({
                             error: {
+                                // @todo Define a more meaningful error code.
+                                code: -32603,
                                 message: 'The given value for begin "25" is out of bounds.'
                             },
-                            id,
-                            result: null
+                            id
                         });
 
                         done();
@@ -393,10 +390,11 @@ describe('module', () => {
                     worker.addEventListener('message', ({ data }) => {
                         expect(data).to.deep.equal({
                             error: {
+                                // @todo Define a more meaningful error code.
+                                code: -32603,
                                 message: 'The given value for end "25" is out of bounds.'
                             },
-                            id,
-                            result: null
+                            id
                         });
 
                         done();
@@ -413,10 +411,11 @@ describe('module', () => {
                     worker.addEventListener('message', ({ data }) => {
                         expect(data).to.deep.equal({
                             error: {
+                                // @todo Define a more meaningful error code.
+                                code: -32603,
                                 message: 'The given value for end "4" is below the given value for begin "12".'
                             },
-                            id,
-                            result: null
+                            id
                         });
 
                         done();
@@ -449,7 +448,6 @@ describe('module', () => {
             it('should return the id of the stored arrayBuffer message', (done) => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
-                        error: null,
                         id,
                         result: null
                     });
@@ -480,10 +478,11 @@ describe('module', () => {
                 worker.addEventListener('message', ({ data }) => {
                     expect(data).to.deep.equal({
                         error: {
+                            // @todo Define a more meaningful error code.
+                            code: -32603,
                             message: `There is already an arrayBuffer stored with an id called "${ arrayBufferId }".`
                         },
-                        id,
-                        result: null
+                        id
                     });
 
                     done();

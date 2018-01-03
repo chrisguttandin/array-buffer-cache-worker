@@ -132,7 +132,7 @@ describe('arrayBufferStore', () => {
 
                 it('should throw an error', () => {
                     expect(() => {
-                        arrayBufferStore.slice(id, -1);
+                        arrayBufferStore.slice(id, -1, null);
                     }).to.throw(Error, 'The given value for begin "-1" is out of bounds.');
                 });
 
@@ -142,7 +142,7 @@ describe('arrayBufferStore', () => {
 
                 it('should throw an error', () => {
                     expect(() => {
-                        arrayBufferStore.slice(id, (Float64Array.BYTES_PER_ELEMENT * 3) + 1);
+                        arrayBufferStore.slice(id, (Float64Array.BYTES_PER_ELEMENT * 3) + 1, null);
                     }).to.throw(Error, 'The given value for begin "25" is out of bounds.');
                 });
 
