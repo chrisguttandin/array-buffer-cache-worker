@@ -62,9 +62,9 @@ export interface IArrayBufferCacheWorkerCustomDefinition extends IWorkerDefiniti
 
         params: {
 
-            arrayBufferId: number;
-
             arrayBuffer: ArrayBuffer;
+
+            arrayBufferId: number;
 
         };
 
