@@ -1,4 +1,4 @@
-import { createWorker } from 'worker-factory';
+import { TWorkerImplementation, createWorker } from 'worker-factory';
 import { ArrayBufferStore } from './helpers/array-buffer-store';
 import { IArrayBufferCacheWorkerCustomDefinition } from './interfaces';
 
@@ -7,7 +7,7 @@ export * from './types';
 
 const arrayBufferStore = new ArrayBufferStore();
 
-createWorker<IArrayBufferCacheWorkerCustomDefinition>(self, {
+createWorker<IArrayBufferCacheWorkerCustomDefinition>(self, <TWorkerImplementation<IArrayBufferCacheWorkerCustomDefinition>> {
     clone: ({ arrayBufferId }) => {
         const arrayBuffer = arrayBufferStore.clone(arrayBufferId);
 
