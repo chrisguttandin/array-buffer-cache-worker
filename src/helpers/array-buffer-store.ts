@@ -6,7 +6,7 @@ export class ArrayBufferStore {
         this._store = new Map();
     }
 
-    public clone (id: number) {
+    public clone (id: number): ArrayBuffer {
         const arrayBuffer = this._store.get(id);
 
         if (arrayBuffer === undefined) {
@@ -16,7 +16,7 @@ export class ArrayBufferStore {
         return arrayBuffer.slice(0);
     }
 
-    public purge (id: number) {
+    public purge (id: number): void {
         const arrayBufferExisted = this._store.delete(id);
 
         if (!arrayBufferExisted) {
@@ -24,7 +24,7 @@ export class ArrayBufferStore {
         }
     }
 
-    public slice (id: number, begin: number, end: null | number) {
+    public slice (id: number, begin: number, end: null | number): ArrayBuffer {
         const arrayBuffer = this._store.get(id);
 
         if (arrayBuffer === undefined) {
@@ -48,7 +48,7 @@ export class ArrayBufferStore {
         return arrayBuffer.slice(begin, (end === null) ? arrayBuffer.byteLength : end);
     }
 
-    public store (id: number, arrayBuffer: ArrayBuffer) {
+    public store (id: number, arrayBuffer: ArrayBuffer): void {
         if (this._store.has(id)) {
             throw new Error(`There is already an arrayBuffer stored with an id called "${ id }".`);
         }
