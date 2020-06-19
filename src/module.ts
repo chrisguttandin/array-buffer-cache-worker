@@ -11,11 +11,11 @@ export * from './types/index';
 
 const arrayBufferStore = new ArrayBufferStore();
 
-createWorker<IArrayBufferCacheWorkerCustomDefinition>(self, <TWorkerImplementation<IArrayBufferCacheWorkerCustomDefinition>> {
+createWorker<IArrayBufferCacheWorkerCustomDefinition>(self, <TWorkerImplementation<IArrayBufferCacheWorkerCustomDefinition>>{
     clone: ({ arrayBufferId }) => {
         const arrayBuffer = arrayBufferStore.clone(arrayBufferId);
 
-        return { result: arrayBuffer, transferables: [ arrayBuffer ] };
+        return { result: arrayBuffer, transferables: [arrayBuffer] };
     },
     purge: ({ arrayBufferId }) => {
         arrayBufferStore.purge(arrayBufferId);
@@ -25,7 +25,7 @@ createWorker<IArrayBufferCacheWorkerCustomDefinition>(self, <TWorkerImplementati
     slice: ({ arrayBufferId, begin, end }) => {
         const arrayBuffer = arrayBufferStore.slice(arrayBufferId, begin, end);
 
-        return { result: arrayBuffer, transferables: [ arrayBuffer ] };
+        return { result: arrayBuffer, transferables: [arrayBuffer] };
     },
     store: ({ arrayBuffer, arrayBufferId }) => {
         arrayBufferStore.store(arrayBufferId, arrayBuffer);

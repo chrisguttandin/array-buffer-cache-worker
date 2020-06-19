@@ -1,7 +1,5 @@
 describe('ArrayBuffer', () => {
-
     describe('slice()', () => {
-
         let arrayBuffer;
 
         after(function (done) {
@@ -36,7 +34,5 @@ describe('ArrayBuffer', () => {
 
             expect(currentNow - lastNow).to.be.above(90);
         });
-
     });
-
 });
