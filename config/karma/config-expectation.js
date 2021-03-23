@@ -19,6 +19,8 @@ module.exports = (config) => {
             'test/expectation/any/**/*.js': 'webpack'
         },
 
+        reporters: ['dots'],
+
         webpack: {
             mode: 'development',
             module: {
