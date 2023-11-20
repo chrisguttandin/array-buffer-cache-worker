@@ -2,13 +2,6 @@ describe('ArrayBuffer', () => {
     describe('slice()', () => {
         let arrayBuffer;
 
-        after(function (done) {
-            this.timeout(3000);
-
-            // @todo This is an optimistic fix to prevent the famous 'Some of your tests did a full page reload!' error.
-            setTimeout(done, 2000);
-        });
-
         beforeEach(function () {
             this.timeout(30000);
 
