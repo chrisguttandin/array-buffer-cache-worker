@@ -6,7 +6,6 @@ const isType = (...types) => env.TYPE === undefined || types.includes(env.TYPE);
 
 module.exports = {
     build: ['sh:build'],
-    lint: ['sh:lint-config', 'sh:lint-src', 'sh:lint-test'],
     test: [
         ...filter(isType('expectation'), 'sh:test-expectation'),
         ...filter(isType('integration'), 'sh:test-integration'),
